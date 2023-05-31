@@ -115,6 +115,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_163541) do
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_topics_on_name", unique: true
   end
 
   create_table "users", id: :serial, force: :cascade do |t|
