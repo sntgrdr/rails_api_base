@@ -14,7 +14,7 @@
 #
 FactoryBot.define do
   factory :topic do
-    name { Faker::Hobby.activity }
+    name  { Faker::Name.unique.name }
     image { Faker::Avatar.image }
   end
 end
