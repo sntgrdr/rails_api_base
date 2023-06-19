@@ -25,4 +25,13 @@ class Target < ApplicationRecord
                      numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
   validates :title, presence: true
   validates :latitude, :longitude, presence: true, numericality: true
+  validate :targets_count, on: :create
+
+  private
+
+  def targets_count
+    return unless user.targets.size == 3
+
+    errors.add(:base, I18n.t('api.errors.model.target.maximum_targets_count'))
+  end
 end
