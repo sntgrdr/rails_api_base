@@ -18,7 +18,7 @@ describe 'GET /api/v1/topics', type: :request do
 
     it 'returns the topics list' do
       subject
-      expect(json[:topics]).to eq(topics.as_json(only: %i[id name image]))
+      expect(json[:topics].as_json(except: :image)).to eq(topics.as_json(except: :updated_at))
     end
   end
 
