@@ -12,6 +12,10 @@ module Api
         target
       end
 
+      def index
+        @targets = policy_scope(current_user.targets.preload(:topic))
+      end
+
       private
 
       def target_params
