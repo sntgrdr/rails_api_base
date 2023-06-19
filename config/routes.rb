@@ -21,7 +21,11 @@ Rails.application.routes.draw do
 
       resources :topics, only: :index
 
+<<<<<<< HEAD
       resources :targets, only: %i[create show index]
+=======
+      resources :targets, only: %i[create show]
+>>>>>>> feature/create-target-model
     end
   end
 end
