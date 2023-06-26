@@ -13,7 +13,8 @@ module Api
       end
 
       def index
-        @targets = policy_scope(current_user.targets.preload(:topic))
+        @targets = policy_scope(current_user.targets.preload(:topic)
+                                            .includes(topic: { image_attachment: :blob }))
       end
 
       private

@@ -18,6 +18,8 @@
 #  index_targets_on_user_id   (user_id)
 #
 class Target < ApplicationRecord
+  CREATION_LIMIT = 3
+
   belongs_to :topic
   belongs_to :user
 
@@ -25,12 +27,12 @@ class Target < ApplicationRecord
                      numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 1000 }
   validates :title, presence: true
   validates :latitude, :longitude, presence: true, numericality: true
-  validate :targets_count, on: :create
+  validate :targets_count, unless: -> { user.nil? }, on: :create
 
   private
 
   def targets_count
-    return unless user.targets.size == 3
+    return unless user.targets.size == CREATION_LIMIT
 
     errors.add(:base, I18n.t('api.errors.model.target.maximum_targets_count'))
   end

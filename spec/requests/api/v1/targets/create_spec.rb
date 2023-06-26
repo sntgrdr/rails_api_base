@@ -39,7 +39,9 @@ describe 'POST /api/v1/targets', type: :request do
 
       it 'returns message errors' do
         subject
-        expect(json_errors[:base]).to eq([I18n.t('api.errors.model.target.maximum_targets_count')])
+        expect(json[:errors][:base]).to eq(
+          [I18n.t('api.errors.model.target.maximum_targets_count')]
+        )
       end
     end
 
