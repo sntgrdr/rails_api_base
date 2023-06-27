@@ -1,17 +1,10 @@
 describe 'GET /api/v1/targets/:id', type: :request do
   let(:user) { create(:user) }
-<<<<<<< HEAD
-=======
-  let(:target) { create(:target) }
->>>>>>> feature/create-target-model
 
   subject { get api_v1_target_path(target_id), headers: auth_headers, as: :json }
 
   context 'when the request is valid' do
-<<<<<<< HEAD
     let(:target) { create(:target, user:) }
-=======
->>>>>>> feature/create-target-model
     let!(:target_id) { target.id }
 
     it 'returns success' do

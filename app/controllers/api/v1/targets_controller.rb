@@ -16,6 +16,12 @@ module Api
         @targets = policy_scope(current_user.targets.preload(:topic))
       end
 
+      def destroy
+        authorize target
+        @target.destroy!
+        head :ok
+      end
+
       private
 
       def target_params

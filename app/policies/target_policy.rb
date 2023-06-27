@@ -6,11 +6,12 @@ class TargetPolicy < ApplicationPolicy
   def show?
     true
   end
-<<<<<<< HEAD
 
   def index?
     true
   end
-=======
->>>>>>> feature/create-target-model
+
+  def destroy?
+    user.targets.include?(record)
+  end
 end
