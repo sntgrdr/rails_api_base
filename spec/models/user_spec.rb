@@ -30,6 +30,13 @@
 #
 
 describe User do
+  describe 'associations' do
+    it { should have_many(:targets).dependent(:destroy) }
+    it { should have_many(:messages).dependent(:destroy) }
+    it { should have_many(:conversation_users).dependent(:destroy) }
+    it { should have_many(:conversations).through(:conversation_users) }
+  end
+
   describe 'validations' do
     subject { build :user }
     it { is_expected.to validate_uniqueness_of(:uid).scoped_to(:provider) }

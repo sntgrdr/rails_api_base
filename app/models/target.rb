@@ -18,6 +18,7 @@
 #  index_targets_on_user_id   (user_id)
 #
 class Target < ApplicationRecord
+  has_many :conversations, dependent: :destroy
   belongs_to :topic
   belongs_to :user
 
