@@ -20,12 +20,12 @@ describe 'POST /api/v1/targets', type: :request do
 
     it 'returns the targets attributes' do
       subject
-      expect(json['id']).to eq(Target.last.id)
-      expect(json['topic_id']).to eq(topic.id)
-      expect(json['title']).to eq(params[:title])
-      expect(json['radius']).to eq(params[:radius].to_f.round(2).to_s)
-      expect(json['latitude']).to eq(params[:latitude].to_f.round(6).to_s)
-      expect(json['longitude']).to eq(params[:longitude].to_f.round(6).to_s)
+      expect(json[:id]).to eq(Target.last.id)
+      expect(json[:topic_id]).to eq(topic.id)
+      expect(json[:title]).to eq(params[:title])
+      expect(json[:radius]).to eq(params[:radius].to_f.round(2).to_s)
+      expect(json[:latitude]).to eq(params[:latitude].to_f.round(6).to_s)
+      expect(json[:longitude]).to eq(params[:longitude].to_f.round(6).to_s)
     end
   end
 
