@@ -1,10 +1,8 @@
 module Api
   module V1
     class TopicsController < Api::V1::ApiController
-      # uniqueness en name
-
       def index
-        @topics = policy_scope(Topic)
+        @topics = policy_scope(Topic).includes(image_attachment: :blob)
       end
     end
   end
