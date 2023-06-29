@@ -21,6 +21,8 @@ require 'rails_helper'
 
 RSpec.describe Target, type: :model do
   describe 'associations' do
+    subject { build(:target) }
+
     it { should belong_to(:topic) }
     it { should belong_to(:user) }
   end
@@ -29,8 +31,8 @@ RSpec.describe Target, type: :model do
     it { should validate_presence_of(:radius) }
     it {
       should validate_numericality_of(:radius)
-        .is_greater_than_or_equal_to(1)
-        .is_less_than_or_equal_to(1000)
+        .is_greater_than_or_equal_to(Target::MIN_RADIUS)
+        .is_less_than_or_equal_to(Target::MAX_RADIUS)
     }
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:latitude) }

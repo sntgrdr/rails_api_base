@@ -20,9 +20,9 @@
 FactoryBot.define do
   factory :target do
     title     { Faker::Hobby.activity }
-    radius    { Faker::Number.between(from: 1.0, to: 1000.0) }
-    longitude { Faker::Number.between(from: 1.0, to: 1000.0) }
-    latitude  { Faker::Number.between(from: 1.0, to: 1000.0) }
+    radius    { Faker::Number.between(from: Target::MIN_RADIUS, to: Target::MAX_RADIUS) }
+    longitude { Faker::Address.longitude }
+    latitude  { Faker::Address.latitude }
     topic
     user
   end
