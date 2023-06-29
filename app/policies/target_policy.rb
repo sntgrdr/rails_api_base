@@ -6,11 +6,8 @@ class TargetPolicy < ApplicationPolicy
   def show?
     true
   end
-<<<<<<< HEAD
 
   def index?
     true
   end
-=======
->>>>>>> feature/create-target-model
 end
