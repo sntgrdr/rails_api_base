@@ -1,10 +1,10 @@
 describe 'GET /api/v1/targets/:id', type: :request do
   let(:user) { create(:user) }
-  let(:target) { create(:target) }
 
   subject { get api_v1_target_path(target_id), headers: auth_headers, as: :json }
 
   context 'when the request is valid' do
+    let(:target) { create(:target, user:) }
     let!(:target_id) { target.id }
 
     it 'returns success' do
