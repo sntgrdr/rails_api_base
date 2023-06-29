@@ -1,12 +1,11 @@
 describe 'POST /api/v1/targets', type: :request do
   let!(:topic) { create(:topic) }
+  let!(:user) { create(:user) }
   let(:params) { attributes_for(:target).merge(topic_id: topic.id) }
 
   subject { post api_v1_targets_path, params:, headers: auth_headers, as: :json }
 
   context 'when the request is valid' do
-    let!(:user) { create(:user) }
-
     it 'returns success' do
       subject
       expect(response).to have_http_status(:success)
@@ -30,16 +29,34 @@ describe 'POST /api/v1/targets', type: :request do
   end
 
   context 'when the request is not valid' do
-    let(:auth_headers) { {} }
+    context 'when the user already has 3 targets' do
+      let!(:targets) { create_list(:target, 3, user:) }
 
-    it 'returns unauthorized' do
-      subject
-      expect(response).to have_http_status(:unauthorized)
+      it 'returns bad request' do
+        subject
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'returns message errors' do
+        subject
+        expect(json[:errors][:base]).to eq(
+          [I18n.t('api.errors.model.target.maximum_targets_count')]
+        )
+      end
     end
 
-    it 'returns devise error' do
-      subject
-      expect(json[:errors]).to eq([I18n.t('devise.failure.unauthenticated')])
+    context 'when the user is invalid' do
+      let(:auth_headers) { {} }
+
+      it 'returns unauthorized' do
+        subject
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it 'returns devise error' do
+        subject
+        expect(json[:errors]).to eq([I18n.t('devise.failure.unauthenticated')])
+      end
     end
   end
 end

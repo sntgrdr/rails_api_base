@@ -21,6 +21,8 @@ require 'rails_helper'
 
 RSpec.describe Target, type: :model do
   describe 'associations' do
+    subject { build(:target) }
+
     it { should belong_to(:topic) }
     it { should belong_to(:user) }
   end

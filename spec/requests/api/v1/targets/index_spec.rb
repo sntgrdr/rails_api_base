@@ -1,5 +1,5 @@
 describe 'GET /api/v1/targets', type: :request do
-  let!(:targets) { create_list(:target, 4) }
+  let!(:targets) { create_list(:target, 3) }
 
   subject { get api_v1_targets_path, headers: auth_headers, as: :json }
 
@@ -16,7 +16,7 @@ describe 'GET /api/v1/targets', type: :request do
 
     it 'returns the targets list count' do
       subject
-      expect(json[:targets].count).to eq(4)
+      expect(json[:targets].count).to eq(3)
     end
 
     it 'returns the targets list' do
