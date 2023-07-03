@@ -38,8 +38,6 @@ class User < ApplicationRecord
 
   has_many :targets, dependent: :destroy
   has_many :messages, dependent: :destroy
-  has_many :conversation_users, dependent: :destroy
-  has_many :conversations, through: :conversation_users
 
   validates :uid, uniqueness: { scope: :provider }
 

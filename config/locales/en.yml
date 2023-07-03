@@ -10,3 +10,6 @@ en:
       invalid_content_type: Invalid content type header
       missing_param: A required param is missing
       not_found: Couldn't find the record
+      model:
+        conversation:
+          same_users: The from and to user are the same
