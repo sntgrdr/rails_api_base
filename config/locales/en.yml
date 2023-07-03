@@ -11,5 +11,7 @@ en:
       missing_param: A required param is missing
       not_found: Couldn't find the record
       model:
+        target:
+          maximum_targets_count: There are already 3 targets
         conversation:
           same_users: The from and to user are the same

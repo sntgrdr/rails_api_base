@@ -13,13 +13,8 @@ module Api
       end
 
       def index
-        @targets = policy_scope(current_user.targets.preload(:topic))
-      end
-
-      def destroy
-        authorize target
-        @target.destroy!
-        head :ok
+        @targets = policy_scope(current_user.targets.preload(:topic)
+                                            .includes(topic: { image_attachment: :blob }))
       end
 
       private
