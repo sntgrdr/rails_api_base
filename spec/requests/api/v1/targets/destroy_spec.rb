@@ -23,7 +23,9 @@ describe 'DELETE /api/v1/targets/:id', type: :request do
     let!(:target_id) { target.id }
 
     it 'returns not found' do
-      expect { subject }.to raise_error(Pundit::NotAuthorizedError)
+      expect {
+        subject
+      }.to raise_error(Pundit::NotAuthorizedError, /not allowed to destroy\? this Target/)
     end
   end
 end
