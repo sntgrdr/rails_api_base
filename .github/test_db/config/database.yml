@@ -6,4 +6,4 @@ test:
  password: postgres
  host: localhost
  port: 5432
- database: test_db
+ database: rails_api_base_development
