@@ -9,9 +9,9 @@ en:
     errors:
       invalid_content_type: Invalid content type header
       missing_param: A required param is missing
-      not_found: Couldn't find the record
       model:
         target:
           maximum_targets_count: There are already 3 targets
         conversation:
           same_users: The from and to user are the same
+      not_found: Couldn't find the record
