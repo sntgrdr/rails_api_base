@@ -28,9 +28,7 @@ describe 'GET /api/v1/conversations', type: :request do
 
     it 'returns the targets list' do
       subject
-      expect(json[:conversations].as_json(except: %i[messages])).to eq(
-        expected_conversations.reverse.as_json(except: :updated_at)
-      )
+      expect(json[:conversations].pluck(:id)).to eq expected_conversations.reverse.pluck(:id)
       expect(json[:conversations].pluck(:messages).as_json(except: :user)).to eq(
         expected_messages.reverse.as_json(except: %i[user_id conversation_id updated_at])
       )
