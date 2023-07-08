@@ -17,6 +17,12 @@ module Api
                                             .includes(topic: { image_attachment: :blob }))
       end
 
+      def destroy
+        authorize target
+        @target.destroy!
+        head :ok
+      end
+
       private
 
       def target_params
