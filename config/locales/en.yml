@@ -14,4 +14,5 @@ en:
           maximum_targets_count: There are already 3 targets
         conversation:
           same_users: The from and to user are the same
+          out_of_range: "You are out of the target's range"
       not_found: Couldn't find the record

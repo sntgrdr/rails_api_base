@@ -21,6 +21,8 @@
 #  provider               :string           default("email"), not null
 #  uid                    :string           default(""), not null
 #  tokens                 :json
+#  latitude               :decimal(10, 6)   default(0.0), not null
+#  longitude              :decimal(10, 6)   default(0.0), not null
 #
 # Indexes
 #

@@ -1,8 +1,8 @@
 class CreateConversations < ActiveRecord::Migration[7.0]
   def change
     create_table :conversations do |t|
-      t.bigint :user_from
-      t.bigint :user_to
+      t.integer :user_from
+      t.integer :user_to
 
       t.timestamps
     end
