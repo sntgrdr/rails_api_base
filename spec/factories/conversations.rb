@@ -16,5 +16,9 @@
 FactoryBot.define do
   factory :conversation do
     targets { create_list(:target, 3) }
+
+    trait :skip_validations do
+      to_create { |instance| instance.save(validate: false) }
+    end
   end
 end

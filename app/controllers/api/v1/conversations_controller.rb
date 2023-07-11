@@ -1,7 +1,7 @@
 module Api
   module V1
     class ConversationsController < ApiController
-      before_action :target, on: :create
+      before_action :target, only: :create
 
       def index
         @conversations = policy_scope(Conversation.related_to_current_user(current_user)
