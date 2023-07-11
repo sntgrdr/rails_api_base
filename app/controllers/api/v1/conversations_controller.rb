@@ -2,6 +2,7 @@ module Api
   module V1
     class ConversationsController < ApiController
       before_action :target, only: :create
+      before_action :conversation, only: :show
 
       def index
         @conversations = policy_scope(Conversation.related_to_current_user(current_user)
@@ -18,7 +19,13 @@ module Api
         render :show if @conversation.save!
       end
 
+      def show; end
+
       private
+
+      def conversation
+        @conversation = Conversation.find(params[:id]).includes(:messages)
+      end
 
       def target
         @target = Target.find(params[:target_id])
