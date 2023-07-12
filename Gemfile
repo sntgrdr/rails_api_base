@@ -24,6 +24,7 @@ gem 'pundit', '~> 2.1'
 gem 'rack-cors', '~> 1.0', '>= 1.0.6'
 gem 'sass-rails', '~> 6.0.0'
 gem 'sendgrid', '~> 1.2.4'
+gem 'sidekiq-scheduler', '~> 4.0', '>= 4.0.3'
 gem 'sprockets', '~> 3.7.2'
 gem 'yaaf', '~> 2.2'
 # Use Redis adapter to run Action Cable in production
