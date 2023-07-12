@@ -1,4 +1,6 @@
 ActiveAdmin.register Target do
+  actions :index
+
   permit_params :topic_id, :user_id, :title, :radius, :latitude, :longitude, :user_email
 
   index do
