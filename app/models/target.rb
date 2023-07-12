@@ -39,7 +39,7 @@ class Target < ApplicationRecord
   private
 
   def targets_count
-    return unless user.targets.size == CREATION_LIMIT
+    return unless user.targets.size == CREATION_LIMIT && !user.vip?
 
     errors.add(:base, I18n.t('api.errors.model.target.maximum_targets_count'))
   end

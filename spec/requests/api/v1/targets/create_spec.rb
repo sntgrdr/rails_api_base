@@ -6,25 +6,48 @@ describe 'POST /api/v1/targets', type: :request do
   subject { post api_v1_targets_path, params:, headers: auth_headers, as: :json }
 
   context 'when the request is valid' do
-    it 'returns success' do
-      subject
-      expect(response).to have_http_status(:success)
-    end
-
-    it 'creates a new target' do
-      expect {
+    context 'when is not a vip user' do
+      it 'returns success' do
         subject
-      }.to change(Target, :count).by(1)
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'creates a new target' do
+        expect {
+          subject
+        }.to change(Target, :count).by(1)
+      end
+
+      it 'returns the targets attributes' do
+        subject
+        expect(json[:id]).to eq(Target.last.id)
+        expect(json[:topic_id]).to eq(topic.id)
+        expect(json[:title]).to eq(params[:title])
+        expect(json[:radius]).to eq(params[:radius].to_f.round(2).to_s)
+        expect(json[:latitude]).to eq(params[:latitude].to_f.round(6).to_s)
+        expect(json[:longitude]).to eq(params[:longitude].to_f.round(6).to_s)
+      end
     end
 
-    it 'returns the targets attributes' do
-      subject
-      expect(json[:id]).to eq(Target.last.id)
-      expect(json[:topic_id]).to eq(topic.id)
-      expect(json[:title]).to eq(params[:title])
-      expect(json[:radius]).to eq(params[:radius].to_f.round(2).to_s)
-      expect(json[:latitude]).to eq(params[:latitude].to_f.round(6).to_s)
-      expect(json[:longitude]).to eq(params[:longitude].to_f.round(6).to_s)
+    context 'when is a vip user' do
+      let!(:user) { create(:user, vip: true) }
+      let!(:targets) { create_list(:target, 3, user:) }
+
+      it 'returns success' do
+        subject
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'creates a new target' do
+        expect {
+          subject
+        }.to change(Target, :count).by(1)
+      end
+
+      it 'has four targets' do
+        subject
+        expect(user.targets.reload.count).to eq(4)
+      end
     end
   end
 
