@@ -27,6 +27,9 @@ class Target < ApplicationRecord
   belongs_to :topic
   belongs_to :user
 
+  delegate :email, to: :user, prefix: true
+  delegate :name, to: :topic, prefix: true
+
   validates :radius, presence: true, numericality: { greater_than_or_equal_to: MIN_RADIUS,
                                                      less_than_or_equal_to: MAX_RADIUS }
   validates :title, presence: true
