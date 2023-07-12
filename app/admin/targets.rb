@@ -1,13 +1,13 @@
 ActiveAdmin.register Target do
-  permit_params :topic_id, :user_id, :title, :radius, :latitude, :longitude
+  permit_params :topic_id, :user_id, :title, :radius, :latitude, :longitude, :user_email
 
   index do
     id_column
     column :topic do |target|
-      link_to target.topic.title, admin_topic_path(target.topic)
+      link_to target.topic_id
     end
     column :user do |target|
-      link_to target.user.email, admin_user_path(target.user)
+      link_to target.user_email, admin_user_path(target.user)
     end
     column :title
     column :radius
