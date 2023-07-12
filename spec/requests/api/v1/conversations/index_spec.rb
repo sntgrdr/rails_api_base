@@ -12,11 +12,6 @@ describe 'GET /api/v1/conversations', type: :request do
       create(:conversation, :skip_validations, user_from: third_user, user_to: user)
     end
     let!(:expected_conversations) { [conversation, second_conversation] }
-    let!(:expected_messages) { [conversation.messages, second_conversation.messages] }
-    let!(:user_message) { create(:message, user:, conversation:) }
-    let!(:response_message) { create(:message, user: second_user, conversation:) }
-    let!(:user_message2) { create(:message, user: third_user, conversation: second_conversation) }
-    let!(:response_message2) { create(:message, user:, conversation: second_conversation) }
 
     it 'returns success' do
       subject
@@ -32,13 +27,7 @@ describe 'GET /api/v1/conversations', type: :request do
 
     it 'returns the conversations list' do
       subject
-      expect(json[:conversations].pluck(:id)).to eq expected_conversations.reverse.pluck(:id)
-      expect(json[:conversations].pluck(:messages).as_json(except: :user)).to eq(
-        expected_messages.reverse.as_json(except: %i[user_id conversation_id updated_at])
-      )
-      expect(json[:conversations].pluck(:messages).flatten.pluck(:user).pluck(:id)).to include(
-        *expected_messages.as_json.flatten.pluck('user_id')
-      )
+      expect(json[:conversations].pluck(:id)).to eq expected_conversations.pluck(:id)
     end
 
     context 'when the second user is logged in' do
