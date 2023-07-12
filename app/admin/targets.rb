@@ -1,6 +1,8 @@
 ActiveAdmin.register Target do
   permit_params :topic_id, :user_id, :title, :radius, :latitude, :longitude, :user_email
 
+  filter :topic
+
   index do
     id_column
     column :topic do |target|
