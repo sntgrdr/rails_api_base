@@ -4,7 +4,7 @@ ActiveAdmin.register Target do
   index do
     id_column
     column :topic do |target|
-      link_to target.topic_id
+      link_to target.topic_name, admin_topic_path(target.topic)
     end
     column :user do |target|
       link_to target.user_email, admin_user_path(target.user)
