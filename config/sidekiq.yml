@@ -1,0 +1,4 @@
+:schedule:
+  unmatched_targets:
+    cron: '59 23 * * * *'
+    class: UnmatchedTargets
