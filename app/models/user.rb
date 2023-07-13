@@ -37,6 +37,7 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   has_many :targets, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   validates :uid, uniqueness: { scope: :provider }
 

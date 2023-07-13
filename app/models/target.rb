@@ -22,6 +22,8 @@ class Target < ApplicationRecord
   MIN_RADIUS = 1.00
   MAX_RADIUS = 1000.00
 
+  has_many :conversation_targets, dependent: :destroy
+  has_many :conversations, through: :conversation_targets
   belongs_to :topic
   belongs_to :user
 
