@@ -5,8 +5,12 @@ describe 'GET /api/v1/conversations', type: :request do
     let!(:user) { create(:user) }
     let!(:second_user) { create(:user) }
     let!(:third_user) { create(:user) }
-    let(:conversation) { create(:conversation, user_from: user, user_to: second_user) }
-    let(:second_conversation) { create(:conversation, user_from: third_user, user_to: user) }
+    let!(:conversation) do
+      create(:conversation, :skip_validations, user_from: user, user_to: second_user)
+    end
+    let!(:second_conversation) do
+      create(:conversation, :skip_validations, user_from: third_user, user_to: user)
+    end
     let!(:expected_conversations) { [conversation, second_conversation] }
     let!(:expected_messages) { [conversation.messages, second_conversation.messages] }
     let!(:user_message) { create(:message, user:, conversation:) }
@@ -26,7 +30,7 @@ describe 'GET /api/v1/conversations', type: :request do
       end
     end
 
-    it 'returns the targets list' do
+    it 'returns the conversations list' do
       subject
       expect(json[:conversations].pluck(:id)).to eq expected_conversations.reverse.pluck(:id)
       expect(json[:conversations].pluck(:messages).as_json(except: :user)).to eq(

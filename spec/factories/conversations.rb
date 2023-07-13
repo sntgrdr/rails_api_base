@@ -3,8 +3,8 @@
 # Table name: conversations
 #
 #  id         :bigint           not null, primary key
-#  user_from  :bigint
-#  user_to    :bigint
+#  user_from  :integer
+#  user_to    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -16,5 +16,9 @@
 FactoryBot.define do
   factory :conversation do
     targets { create_list(:target, 3) }
+
+    trait :skip_validations do
+      to_create { |instance| instance.save(validate: false) }
+    end
   end
 end

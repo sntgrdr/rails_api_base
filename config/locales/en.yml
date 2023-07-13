@@ -11,6 +11,7 @@ en:
       missing_param: A required param is missing
       model:
         conversation:
+          out_of_range: You are out of the target's range
           same_users: The from and to user are the same
         target:
           maximum_targets_count: There are already 3 targets

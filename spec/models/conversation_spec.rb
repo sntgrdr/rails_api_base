@@ -3,8 +3,8 @@
 # Table name: conversations
 #
 #  id         :bigint           not null, primary key
-#  user_from  :bigint
-#  user_to    :bigint
+#  user_from  :integer
+#  user_to    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -32,9 +32,14 @@ RSpec.describe Conversation, type: :model do
 
   describe '#conversation_users' do
     context 'when the entity is invalid' do
+      let!(:error_message) { I18n.t('api.errors.model.conversation.same_users') }
       let(:user) { create(:user) }
       let(:conversation) { build(:conversation, user_from: user, user_to: user) }
-      let!(:error_message) { I18n.t('api.errors.model.conversation.same_users') }
+      before do
+        user_latitude = conversation.targets.last.latitude
+        user_longitude = conversation.targets.last.longitude
+        user.update!(latitude: user_latitude, longitude: user_longitude)
+      end
 
       it 'return error message' do
         expect(conversation).not_to be_valid
@@ -45,6 +50,41 @@ RSpec.describe Conversation, type: :model do
     context 'when the entity is valid' do
       let(:user) { create(:user) }
       let(:conversation) { build(:conversation, user_from: user, user_to: user) }
+      before do
+        user_latitude = conversation.targets.last.latitude
+        user_longitude = conversation.targets.last.longitude
+        user.update!(latitude: user_latitude, longitude: user_longitude)
+      end
+
+      it 'return creates the conversation' do
+        conversation.user_to = create(:user)
+        expect(conversation).to be_valid
+        expect(conversation.errors[:base]).to be_empty
+      end
+    end
+  end
+
+  describe '#within_range' do
+    context 'when the entity is invalid' do
+      let(:user) { create(:user, latitude: 40.7128, longitude: -74.0060) }
+      let(:target) { create(:target, radius: 1, latitude: 40.7128, longitude: -74.0019) }
+      let!(:conversation) { build(:conversation, user_from: user, user_to: target.user) }
+      let!(:error_message) { I18n.t('api.errors.model.conversation.out_of_range') }
+
+      it 'return error message' do
+        expect(conversation).not_to be_valid
+        expect(conversation.errors[:base]).to eq([error_message])
+      end
+    end
+
+    context 'when the entity is valid' do
+      let(:user) { create(:user) }
+      let(:conversation) { build(:conversation, user_from: user, user_to: user) }
+      before do
+        user_latitude = conversation.targets.last.latitude + 0.1
+        user_longitude = conversation.targets.last.longitude
+        user.update!(latitude: user_latitude, longitude: user_longitude)
+      end
 
       it 'return creates the conversation' do
         conversation.user_to = create(:user)
